@@ -13,22 +13,9 @@ const app = express();
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [keys.cookieKey],
+    keys: [keys.CookieKey],
   })
 );
-
-// Shim to satisfy Passport's expectation of req.session.regenerate and req.session.save
-// when using cookie-session, which does not provide these methods.
-app.use((req, res, next) => {
-  if (req.session && !req.session.regenerate) {
-    req.session.regenerate = (cb) => cb && cb();
-  }
-  if (req.session && !req.session.save) {
-    req.session.save = (cb) => cb && cb();
-  }
-  next();
-});
-
 app.use(passport.initialize());
 app.use(passport.session());
 
