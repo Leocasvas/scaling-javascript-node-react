@@ -10,8 +10,6 @@ mongoose.connect(keys.mongoURI);
 
 const app = express();
 
-app.set("trust proxy", 1);
-
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
